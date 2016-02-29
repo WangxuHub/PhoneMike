@@ -88,14 +88,17 @@ namespace PhoneMike.WebSocketServer
                 //处理下一个客户端连接
                 server.BeginAccept(new AsyncCallback(Accept), server);
                 byte[] buffer = new byte[65536];
-                //接收客户端消息
-                client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(Recieve), client);
+
                 ClientInfo info = new ClientInfo();
                 info.Id = client.RemoteEndPoint;
                 info.handle = client.Handle;
                 info.buffer = buffer;
                 //把客户端存入clientPool
                 clientPool.Add(client, info);
+
+                //接收客户端消息
+                client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(Recieve), client);
+               
             }
             catch //(Exception ex)
             {
