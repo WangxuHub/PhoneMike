@@ -94,7 +94,8 @@ namespace PhoneMike.WebSocketServer
                 info.handle = client.Handle;
                 info.buffer = buffer;
                 //把客户端存入clientPool
-                clientPool.Add(client, info);
+                if(!clientPool.ContainsKey(client))
+                    clientPool.Add(client, info);
 
                 //接收客户端消息
                 client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(Recieve), client);

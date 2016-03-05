@@ -61,6 +61,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RsaTest.aspx" />
     <Content Include="Global.asax" />
     <Content Include="GoOnLine.aspx" />
     <Content Include="PhoneMike.html" />
@@ -70,9 +71,17 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\CryptHelper.cs" />
     <Compile Include="Common\DeviceInfo.cs" />
     <Compile Include="Common\JsonHelper.cs" />
     <Compile Include="Common\ManageInfo.cs" />
+    <Compile Include="RsaTest.aspx.cs">
+      <DependentUpon>RsaTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RsaTest.aspx.designer.cs">
+      <DependentUpon>RsaTest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
