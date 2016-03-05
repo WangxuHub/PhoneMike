@@ -23,7 +23,7 @@ namespace PhoneMike.Common
         protected void Button1_Click(object sender, EventArgs e)
         {
             string unCryptStr = TextBox1.Text;
-            string cryptStr = Common.CryptHelper.RSAEncrypt("", unCryptStr);
+            string cryptStr =Common.CryptHelper.EncryptSpecial(unCryptStr);;// Common.CryptHelper.RsaEncrypt(unCryptStr);
 
             TextBox2.Text = cryptStr;
         }
@@ -32,7 +32,7 @@ namespace PhoneMike.Common
         {
 
             string cryptStr = TextBox2.Text;
-            string unCryptStr = Common.CryptHelper.RSADecrypt("", cryptStr);
+            string unCryptStr = Common.CryptHelper.DecryptSpecial(cryptStr); ;//Common.CryptHelper.RsaDecrypt(cryptStr);
 
             TextBox3.Text = unCryptStr;
         }
