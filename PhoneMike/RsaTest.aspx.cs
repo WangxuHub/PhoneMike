@@ -36,5 +36,5 @@ namespace PhoneMike.Common
 
             TextBox3.Text = unCryptStr;
         }
-    }
+    }  
 }
