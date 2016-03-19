@@ -17,7 +17,7 @@ namespace PhoneMike.Common
     public class SockUser:System.Collections.IEnumerator
     {
         public object Current
-        {  
+        {     
             get
             {
                 return new object();
