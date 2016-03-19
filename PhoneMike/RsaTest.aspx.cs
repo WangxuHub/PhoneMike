@@ -17,7 +17,7 @@ namespace PhoneMike.Common
         protected void TextBox1_TextChanged(object sender, EventArgs e)
         {
 
-        }
+        }  
 
         //加密
         protected void Button1_Click(object sender, EventArgs e)
