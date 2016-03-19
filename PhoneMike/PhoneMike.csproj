@@ -70,12 +70,14 @@
     <Content Include="Resource\js\recorder.js" />
     <Content Include="Resource\js\recorderWorker.js" />
     <Content Include="Web.config" />
+    <Content Include="枚举.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CryptHelper.cs" />
     <Compile Include="Common\DeviceInfo.cs" />
     <Compile Include="Common\JsonHelper.cs" />
     <Compile Include="Common\ManageInfo.cs" />
+    <Compile Include="Common\SocketUser.cs" />
     <Compile Include="RsaTest.aspx.cs">
       <DependentUpon>RsaTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -96,6 +98,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSocketServer\WebSocket.cs" />
     <Compile Include="WebSocketServer\WebSocketHelper.cs" />
+    <Compile Include="枚举.aspx.cs">
+      <DependentUpon>枚举.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="枚举.aspx.designer.cs">
+      <DependentUpon>枚举.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Web.Debug.config">
