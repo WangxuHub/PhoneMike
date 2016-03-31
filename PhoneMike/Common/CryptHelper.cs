@@ -69,18 +69,26 @@ namespace PhoneMike.Common
         /// <summary>
         /// 当前证书 X509
         /// </summary>
-        private static X509Certificate2 currentX509Cert
+        public static X509Certificate2 currentX509Cert
         {
             get
             {  //StoreName.My 为证书 ---个人  ，如果想要获取其他路径下的证书,如“受信任的根证书颁发机构”
                 X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
-                store.Open(OpenFlags.MaxAllowed);
+                store.Open(OpenFlags.ReadOnly);
                 X509Certificate2Collection certCollection = store.Certificates;
                 X509Certificate2 cert = null;
 
                 foreach (X509Certificate2 c in certCollection)
                 {
-                    if (c.SerialNumber == "295B5F13293C2A9A474491EC94851F93")
+                    //if (c.SerialNumber == "295B5F13293C2A9A474491EC94851F93")
+                    //{
+                    //    cert = c;
+
+                    //    break;
+                    //}
+
+
+                    if (c.SubjectName.Name.IndexOf("wangxuhub.com")>-1)
                     {
                         cert = c;
 
@@ -128,7 +136,7 @@ namespace PhoneMike.Common
           
 
             RSACryptoServiceProvider provider=new RSACryptoServiceProvider();
-            //从证书中获得RSACryptoServiceProvider
+            //从证书中获得RSAdCryptoServiceProvider
             switch (rsaType)
             {
                 case eRsaProvideTpye.publicProvideTpye:
@@ -188,94 +196,6 @@ namespace PhoneMike.Common
             }
         }
 
-        /// <summary>
-        /// 用私钥加密 不推荐 不安全
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static string EncryptSpecial(string sourceStr)
-        {
-            byte[] source = Encoding.UTF8.GetBytes(sourceStr);
-
-            BigInteger d = new BigInteger(paramsters.Exponent);
-            BigInteger n = new BigInteger(paramsters.Modulus);
-
-            //#region n转成成无符号数
-            //if(n.Sign==-1) //负数
-            //{
-            //    n = BigInteger.Abs(n);
-            //}
-          //  #endregion
-
-            int sug = paramsters.Modulus.Length;
-            int len = source.Length;
-            int cycle = 0;
-            if ((len % sug) == 0) cycle = len / sug; else cycle = len / sug + 1;
-
-            ArrayList temp = new ArrayList();
-            int blockLen = 0;
-            for (int i = 0; i < cycle; i++)
-            {
-                if (len >= sug) blockLen = sug; else blockLen = len;
-
-                byte[] context = new byte[blockLen];
-                int po = i * sug;
-                Array.Copy(source, po, context, 0, blockLen);
-
-                BigInteger biText = new BigInteger(context);
-                BigInteger biEnText = BigInteger.ModPow(biText, d, n);////(d, n);
-
-                byte[] b = biEnText.ToByteArray();
-                temp.AddRange(b);
-                len -= blockLen;
-            }
-            byte[] retByte =(byte[])temp.ToArray(typeof(byte));
-            return Convert.ToBase64String(retByte);
-        }
-
-        /// <summary>
-        /// 用公钥解密 不推荐 不安全
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public  static string DecryptSpecial(string sourceStr)
-        {
-            byte[] source = Convert.FromBase64String(sourceStr);
-
-            BigInteger e = new BigInteger(paramsters.D);
-            BigInteger n = new BigInteger(paramsters.Modulus);
-            //#region n转成成无符号数
-            //if(n.Sign==-1) //负数
-            //{
-            //    n = BigInteger.Abs(n);
-            //}
-            //#endregion
-            int bk = paramsters.Modulus.Length;
-            int len = source.Length;
-            int cycle = 0;
-            if ((len % bk) == 0) cycle = len / bk; else cycle = len / bk + 1;
-
-            ArrayList temp = new ArrayList();
-            int blockLen = 0;
-            for (int i = 0; i < cycle; i++)
-            {
-                if (len >= bk) blockLen = bk; else blockLen = len;
-
-                byte[] context = new byte[blockLen];
-                int po = i * bk;
-                Array.Copy(source, po, context, 0, blockLen);
-
-                BigInteger biText = new BigInteger(context);
-                BigInteger biEnText = BigInteger.ModPow(biText, e, n);
-
-                byte[] b = biEnText.ToByteArray();
-                temp.AddRange(b);
-                len -= blockLen;
-            }
-            byte[] retByte = (byte[])temp.ToArray(typeof(byte));
-
-            return Encoding.UTF8.GetString(retByte);
-        }
 
     }
 }

@@ -22,13 +22,17 @@ namespace PhoneMike.WebSocketServer
         {
             Thread serverSocketThraed = new Thread(() =>
             {
-                Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                string ipAddress = WebSocketInfo.WebSocketAdressIP;
-                server.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
-                server.Listen(10);
+             
+                    //Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    Socket server = new Socket(SocketType.Stream, ProtocolType.Tcp);
+                    string ipAddress = WebSocketInfo.WebSocketAdressIP;
+                    server.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
+                    server.Listen(10);
 
-                //当中第二个参数为Object 可以放任何值类型（装箱），再委托方法中IAsyncResult.AsyncState，就是已装箱的值，执行相应的拆箱操作就可以完成，委托传值
-                server.BeginAccept(new AsyncCallback(Accept), server);
+                    //当中第二个参数为Object 可以放任何值类型（装箱），再委托方法中IAsyncResult.AsyncState，就是已装箱的值，执行相应的拆箱操作就可以完成，委托传值
+                    server.BeginAccept(new AsyncCallback(Accept), server);
+                //}
+                //catch { ;}
             });
 
             serverSocketThraed.Start();

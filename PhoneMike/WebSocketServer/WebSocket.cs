@@ -214,11 +214,20 @@ namespace PhoneMike.WebSocketServer
         }
 
 
-        public static string WebSocketAdressPort
+        public static string WebSocketAddressPort
         {
             get
             {
                 return System.Configuration.ConfigurationManager.AppSettings["webSocketAdressPort"];
+            }
+        }
+
+        public static string WebSocketAddressPortSecure
+        {
+
+            get
+            {
+                return System.Configuration.ConfigurationManager.AppSettings["WebSocketAddressPortSecure"];
             }
         }
     }
