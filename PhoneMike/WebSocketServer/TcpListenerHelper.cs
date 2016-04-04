@@ -20,6 +20,7 @@ namespace PhoneMike.WebSocketServer
         public static void RunServer(string address,int port)
         {
             TcpListener listener = new TcpListener(IPAddress.Parse(address), port);
+            listener.Stop();
             listener.Start();
 
             new System.Threading.Thread(() =>
@@ -41,9 +42,24 @@ namespace PhoneMike.WebSocketServer
             }).Start();
         }
 
+        public static bool ValidateServerCertificate(
+              object sender,
+              X509Certificate certificate,
+              X509Chain chain,
+              SslPolicyErrors sslPolicyErrors)
+        {
+            if (sslPolicyErrors == SslPolicyErrors.None)
+                return true;
+
+            Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
+
+            // Do not allow this client to communicate with unauthenticated servers.
+            return false;
+        }
+
         static void ProcessClient(TcpClient client)
         {
-            SslStream sslStream = new SslStream(client.GetStream(), false);
+            SslStream sslStream = new SslStream(client.GetStream(), false, ValidateServerCertificate);
 
             NetworkStream nStream=client.GetStream();
             int length= 2048;//(int)nStream.Length;

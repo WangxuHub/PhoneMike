@@ -62,6 +62,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RFC 2246 - The TLS Protocol Version 1.0.html" />
     <Content Include="RsaTest.aspx" />
     <Content Include="Global.asax" />
     <Content Include="GoOnLine.aspx" />
@@ -99,6 +100,7 @@
     <Compile Include="WebSocketServer\TcpListenerHelper.cs" />
     <Compile Include="WebSocketServer\WebSocket.cs" />
     <Compile Include="WebSocketServer\WebSocketHelper.cs" />
+    <Compile Include="WebSocketServer\SSLSocketHelper.cs" />
     <Compile Include="枚举.aspx.cs">
       <DependentUpon>枚举.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

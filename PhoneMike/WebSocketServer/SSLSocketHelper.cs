@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 
 namespace PhoneMike.WebSocketServer
 {
-    public class WebSocketHelper
+    public class SSLSocketHelper
     {
         public  static Dictionary<Socket, ClientInfo> clientPool = new Dictionary<Socket, ClientInfo>();
         public  static List<SocketMessage> msgPool = new List<SocketMessage>();
@@ -163,8 +163,11 @@ namespace PhoneMike.WebSocketServer
 
                 //接收消息
                 client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(Recieve), client);
-                string msg = Encoding.UTF8.GetString(buffer, 0, length);
 
+                //=====分析数据帧=================================================================================================================
+                string msg = Encoding.UTF8.GetString(buffer, 0, length);
+                AnalysisSSLDataFrame(buffer,length);
+                //===================================================================================================================
 
                 //与客户端的业务无关，只是客户端发起的websocket建立连接请求时，自带的数据帧。
                 if (!clientPool[client].IsHandShaked && msg.Contains("Sec-WebSocket-Key"))
@@ -206,8 +209,32 @@ namespace PhoneMike.WebSocketServer
              
         }
 
+        /// <summary>
+        /// 分析是
+        /// </summary>
+        /// <param name="?"></param>
+        /// <param name="?"></param>
+        private void AnalysisSSLDataFrame(byte[] buffer, int length)
+        {
+            //SSL握手协议报文头包括三个字段：
+            //类型（1字节）：该字段指明使用的SSL握手协议报文类型。SSL握手协议报文包括10种类型。报文类型见图13.5。
+            //长度（3字节）：以字节为单位的报文长度。
+            //内容（≥1字节）：使用的报文的有关参数。
+
+            byte byteType = buffer[0];
+            byte[] byteLength =new Byte[3];
+         //   buffer.CopyTo(byteLength, 1);
+            Array.Copy(buffer, 1, byteLength, 0, 3);
+
+            byte [] byteContent=new byte[length-4];
+            //buffer.CopyTo(byteContent,4);
+            Array.Copy(buffer, 4, byteContent, 0, length - 4);
+
+            string msg = System.Text.Encoding.UTF8.GetString(byteContent);
 
 
+
+        }
 
 
 
@@ -354,44 +381,4 @@ namespace PhoneMike.WebSocketServer
         #endregion
     }
 
-    public class ClientInfo
-    {
-        public byte[] buffer;
-
-        public string NickName { get; set; }
-
-        public EndPoint Id { get; set; }
-
-        public IntPtr handle { get; set; }
-
-        public string Name
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(NickName))
-                {
-                    return NickName;
-                }
-                else
-                {
-                    return string.Format("{0}#{1}", Id, handle);
-                }
-            }
-        }
-
-        public bool IsHandShaked { get; set; }
-    }
-
-    public class SocketMessage
-    {
-        public bool isLoginMessage { get; set; }
-
-        public ClientInfo Client { get; set; }
-
-        public string Message { get; set; }
-
-        public Dictionary<Socket, ClientInfo> SendToClients { get; set; }
-
-        public DateTime Time { get; set; }
-    }
 }

@@ -9,7 +9,7 @@ using SocketPost.Common;
 namespace PhoneMike.WebSocketServer
 {
 
-    public class WebSocket : PhoneMike.WebSocketServer.WebSocketHelper
+    public class WebSocket : PhoneMike.WebSocketServer.SSLSocketHelper
     {
         //在线设备列表
         public static Dictionary<Socket, DeviceInfo> devicePool = new Dictionary<Socket, DeviceInfo>();
