@@ -9,19 +9,29 @@ namespace PhoneMike
 {
     public class Global : System.Web.HttpApplication
     {
-
+         
         protected void Application_Start(object sender, EventArgs e)
         {
             string strPort = WebSocketServer.WebSocketInfo.WebSocketAddressPort;
 
             //非加密
             PhoneMike.WebSocketServer.WebSocket helper = new PhoneMike.WebSocketServer.WebSocket();
-            helper.Run(int.Parse(strPort));
-
+            helper.Run(9527);
+                
             //加密
             string portSecure = WebSocketServer.WebSocketInfo.WebSocketAddressPortSecure;
-            new PhoneMike.WebSocketServer.SSLSocketHelper().Run(int.Parse(portSecure));
-            //WebSocketServer.TcpListenerHelper.RunServer(WebSocketServer.WebSocketInfo.WebSocketAdressIP,Convert.ToInt32(portSecure));
+        
+         
+            WebSocketServer.SslListenerHelper.RunServer(Convert.ToInt32(901));
+
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+
+
+
+            WebSocketServer.SslListenerHelper.StopServer();
         }
 
         protected void Session_Start(object sender, EventArgs e)
@@ -49,9 +59,6 @@ namespace PhoneMike
 
         }
 
-        protected void Application_End(object sender, EventArgs e)
-        {
-
-        }
+      
     }
 }

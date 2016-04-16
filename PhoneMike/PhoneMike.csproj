@@ -97,10 +97,9 @@
       <DependentUpon>GoOnLine.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebSocketServer\TcpListenerHelper.cs" />
+    <Compile Include="WebSocketServer\SslListenerHelper.cs" />
     <Compile Include="WebSocketServer\WebSocket.cs" />
     <Compile Include="WebSocketServer\WebSocketHelper.cs" />
-    <Compile Include="WebSocketServer\SSLSocketHelper.cs" />
     <Compile Include="枚举.aspx.cs">
       <DependentUpon>枚举.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

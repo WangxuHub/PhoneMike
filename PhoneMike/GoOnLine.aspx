@@ -6,6 +6,7 @@
 <head runat="server">
     <meta charset="UTF-8">
     <title>Web Socket Client</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
 </head>
 <body style="padding: 10px;">
     <h1>Web Socket Chating Room</h1>
